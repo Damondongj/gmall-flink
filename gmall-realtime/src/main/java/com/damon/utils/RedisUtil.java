@@ -26,11 +26,9 @@ public class RedisUtil {
                     1000);
 
             System.out.println("开辟连接池");
-            return jedisPool.getResource();
         } else {
             System.out.println(" 连接池 "  + jedisPool.getNumActive());
-            return jedisPool.getResource();
         }
+        return jedisPool.getResource();
     }
-
 }

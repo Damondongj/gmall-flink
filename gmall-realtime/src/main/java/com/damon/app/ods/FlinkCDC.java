@@ -8,31 +8,21 @@ import com.damon.utils.MyKafkaUtil;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
+import static com.damon.utils.EnvUtil.getEnv;
+
 public class FlinkCDC {
 
     public static void main(String[] args) throws Exception {
 
-        //1.获取执行环境
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setParallelism(1);
-
-        //1.1 设置CK&状态后端
-        //env.setStateBackend(new FsStateBackend("hdfs://hadoop102:8020/gmall-flink-210325/ck"));
-        //env.enableCheckpointing(5000L);
-        //env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
-        //env.getCheckpointConfig().setCheckpointTimeout(10000L);
-        //env.getCheckpointConfig().setMaxConcurrentCheckpoints(2);
-        //env.getCheckpointConfig().setMinPauseBetweenCheckpoints(3000);
-
-        //env.setRestartStrategy(RestartStrategies.fixedDelayRestart());
+        StreamExecutionEnvironment env = getEnv();
 
         //2.通过FlinkCDC构建SourceFunction并读取数据
         DebeziumSourceFunction<String> sourceFunction = MySQLSource.<String>builder()
-                .hostname("hadoop102")
+                .hostname("localhost")
                 .port(3306)
                 .username("root")
                 .password("000000")
-//                .databaseList("gmall-210325-flink")
+                .databaseList("gmall_flink")
                 .deserializer(new CustomerDeserialization())
                 .startupOptions(StartupOptions.latest())
                 .build();

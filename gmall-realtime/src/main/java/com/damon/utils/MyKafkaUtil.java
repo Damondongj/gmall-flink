@@ -11,11 +11,11 @@ import java.util.Properties;
 
 public class MyKafkaUtil {
     
-    private static String brokers = "localhost:9092";
-    private static String default_topic = "dwd_default_topic";
+    private static final String brokers = "localhost:9092";
+    private static final String default_topic = "dwd_default_topic";
 
     public static FlinkKafkaProducer<String> getKafkaProducer(String topic) {
-        return new FlinkKafkaProducer<String>(brokers,
+        return new FlinkKafkaProducer<>(brokers,
                 topic,
                 new SimpleStringSchema());
     }
@@ -25,7 +25,7 @@ public class MyKafkaUtil {
         Properties properties = new Properties();
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
 
-        return new FlinkKafkaProducer<T>(default_topic,
+        return new FlinkKafkaProducer<>(default_topic,
                 kafkaSerializationSchema,
                 properties,
                 FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
@@ -38,7 +38,7 @@ public class MyKafkaUtil {
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
 
-        return new FlinkKafkaConsumer<String>(topic,
+        return new FlinkKafkaConsumer<>(topic,
                 new SimpleStringSchema(),
                 properties);
     }
