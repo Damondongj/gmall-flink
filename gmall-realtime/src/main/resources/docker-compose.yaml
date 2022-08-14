@@ -4,6 +4,8 @@ networks:
     driver: bridge
   kafka-networks:
     driver: bridge
+  hbase-networks:
+    driver: bridge
 
 services:
   zookeeper1:
@@ -11,7 +13,7 @@ services:
     container_name: zookeeper1
     restart: always
     ports:
-      - 9001:2181
+      - "9001:2181"
     volumes:
       - "/Users/damon/projects/docker/zookeeper/zookeeper1/data:/data"
       - "/Users/damon/projects/docker/zookeeper/zookeeper1/datalog:/datalog"
@@ -28,7 +30,7 @@ services:
     container_name: zookeeper2
     restart: always
     ports:
-      - 9002:2181
+      - "9002:2181"
     volumes:
       - "/Users/damon/projects/docker/zookeeper/zookeeper2/data:/data"
       - "/Users/damon/projects/docker/zookeeper/zookeeper2/datalog:/datalog"
@@ -82,6 +84,15 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - kafka-networks
+  hbase:
+    image: harisekhon/hbase
+    container_name: hbase
+    ports:
+      - "16000:16000"
+    environment:
+      HBASE_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
+    networks:
+      - hbase-networks
 
 volumes:
   shared-tmpfs:
