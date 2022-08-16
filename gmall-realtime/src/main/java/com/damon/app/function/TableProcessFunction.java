@@ -144,7 +144,7 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
         //3.写入状态,广播出去
         BroadcastState<String, TableProcess> broadcastState = ctx.getBroadcastState(mapStateDescriptor);
         // 来源表 + 操作类型
-        String key = tableProcess.getSourceTable() + "-" + tableProcess.getOperatorType();
+        String key = tableProcess.getSourceTable() + "-" + tableProcess.getOperateType();
         broadcastState.put(key, tableProcess);
     }
 
