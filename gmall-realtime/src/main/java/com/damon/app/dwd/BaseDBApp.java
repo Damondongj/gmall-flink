@@ -26,6 +26,7 @@ public class BaseDBApp {
         StreamExecutionEnvironment env = getEnv();
 
         // 2.消费Kafka ods_base_db 主题数据创建流
+        // ods_base_db 是进过ods层处理过的， 通过flink cdc处理发送到ods_base_db
         String sourceTopic = "ods_base_db";
         String groupId = "base_db_app";
         // 从kafka读出主流数据 kafka中数据是

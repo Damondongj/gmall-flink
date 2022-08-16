@@ -84,15 +84,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - kafka-networks
-  hbase:
-    image: harisekhon/hbase
-    container_name: hbase
-    ports:
-      - "16000:16000"
-    environment:
-      HBASE_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
-    networks:
-      - hbase-networks
+
 
 volumes:
   shared-tmpfs:
