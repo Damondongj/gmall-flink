@@ -53,6 +53,8 @@ public class BaseDBApp {
                 .deserializer(new CustomerDeserialization())
                 .build();
         DataStreamSource<String> tableProcessStrDS = env.addSource(sourceFunction);
+        // 广播的数据的格式
+        // 广播流可以通过查询配置文件，广播到某个operator的所有并发实例中，然后与另一条流数据连接进行计算
         MapStateDescriptor<String, TableProcess> mapStateDescriptor = new MapStateDescriptor<>("map-state", String.class, TableProcess.class);
         BroadcastStream<String> broadcastStream = tableProcessStrDS.broadcast(mapStateDescriptor);
 
@@ -62,6 +64,7 @@ public class BaseDBApp {
         //6.分流  处理数据  广播流数据,主流数据(根据广播流数据进行处理)
         OutputTag<JSONObject> hbaseTag = new OutputTag<JSONObject>("hbase-tag") {
         };
+        // 传入的是侧输出流hbaseTag和广播数据的格式
         SingleOutputStreamOperator<JSONObject> kafka = connectedStream.process(new TableProcessFunction(hbaseTag, mapStateDescriptor));
 
         // 7.提取Kafka流数据和HBase流数据
