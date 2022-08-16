@@ -1,0 +1,95 @@
+hbase
+
+column family(列族)
+	hbase是表中的列，都归属于某个列族，列族是表schema的一部分，所以列族需要在创建标的时候进行定义，列族的所有列都已列族名为前缀
+	courses:history
+
+column qualifier(列限定符)
+	列限定符，可以理解为具体的列名，courses:history属于sourses这个列，
+	它的列限定符是history，需要注意的是列限定符不是表schema的一部分，可以在插入数据的过程中动态创建列
+
+column(列)
+	hbase中的列由列族和列限定符组成，他们由冒号进行分隔，即一个完整的列名应该表述为列族名:列限定符
+
+cell
+	cell是行，列族和列限定符的组合，并包含值和时间戳，可以等价理解为关系型数据库中由指定行和指定列确定的一个单元格，但是不同的是hbase中的一个单元格是由多个版本的数据组成的，每个版本的数据用时间戳进行区分
+
+timestamp(时间戳)
+	hbase中通过row key和column确定的为一个存储单元称为cell，每个cell都保存着同一份数据的多个版本，版本通过时间戳来索引，时间戳的类型是64位整型，时间戳可以由hbase在数据写入的时候自动赋值，也可以由客户显示指定，每个cell中，不同版本的数据按照时间戳倒序排列，即最新的数据排在最前面
+
+
+存储结构
+	regions
+		hbase table中的所有行按照row key的字典序排列，hbase tables通过行键的范围(row key range)被水平切分成多个region，一个region包含了在start key 和end key之间的所有行
+		region是hbase分布式存储和负载均衡的最小单元，这意味着不同的
+		region可以分布在不同的region server上，但是同一个region是不会才分到多个server上的
+
+	region server
+		region server运行在hdfs的DataNode上，具有以下组件
+			WAL(Write Ahead Log 预写日志):用来存储尚未进行持久化存储的数据记录，以便在发生故障的时候进行恢复
+
+			BlockCache 读缓存，它将频繁读取的数据存储在内存中，如果存储不足，它将按照最近最少使用原则清除多余的数据
+
+			MemStore 写缓存，它存储尚未写入磁盘的新数据，并会将数据写入磁盘之前对其进行排序，每个region上的列簇都有一个MemStore
+
+			HFile 将列数据按照key/values的形式存储在文件系统上
+
+		region server 存取一个子表时，会创建一个region对象，然后对表的每个列族创建一个store实例，每个store会有0个或多个sotrefile与之对应，每个storefile则对应一个hfile，hfile就是实际存储在hdfs上的文件
+
+	region由一个或多个store组成，每个store保存着一个columnFamily
+	每个store又由一个menStore或多个sotrefile组成
+	memstore存储在内存中，storefile存储在hdfs上
+
+	regionServer打开一个region的时候，会创建一个相应的HRegion对象，当这个HRegion被打开，他会为每一个表的每一个列簇创建一个Store实例。每一个Store实例相应地有一个或者多个StoreFile实例，StoreFile是真正存储市局的文件(HFile)的(hdfs系统中对应的目录)
+
+	hbase table中的每个列簇都对应着region中的一个store，在hdfs系统中则对应着一个目录，如果列簇中尚无数据，那么该目录为空，也就是该store下还没有storefile
+
+系统架构
+	hbase系统遵循master/slave架构
+
+	zookeeper
+		1、保证任何时候，集群中只有一个Master
+		2、存储所有region的寻址入口
+		3、实时监控region server的状态，将region 	  server的上线和下线信息实时通知给Master
+		4、存储hbase的schema，包括由哪些table，每个table有哪些column family等信息
+
+	master
+		1、为region server分配region
+		2、负责region server的负载均衡
+		3、发现失效的region server并重新分配其上的region
+		4、GFS上的垃圾文件回收
+		5、处理Schema的更新请求
+
+	region server
+		1、region server负责维护master分配给它的region，并处理发送到region上的IO请求
+		2、region server负责切分在运行过程中变得过大的region
+
+组件间的协作
+	hbase使用zookeeper作为分布式协调服务来维护集群中的服务器状态。zookeeper负责维护可用服务列表，并提供服务故障通知等服务
+
+	1、每个region server都会在zookeeper上创建一个临时节点，master通过zookeeper的watcher机制来对节点进行监控，从而可以发现新假如的region server或故障推出的region server
+	2、所有masters会竞争性地在zookeeper上创建同一个临时节点，由于zookeeper只能有一个同名节点，所以必然只有一个master能创建成功，此时该master就是主master，主master会定期向zookeeper发送心跳，备用masters则通过watcher机制对主HMaster所在节点进行监听
+	3、如果主master未能定时发送心跳，则其持有的master会话会过期，相应的临时节点也会删除，这时候会触发定义在该节点上的watcher事件，使得备用的
+	master servers得到通知，所有备用的master server在接到通知后，会再次去竞争性地创建临时节点，完成主Matser的选举
+
+
+数据写流程
+	1、client向region server提交写请求
+	2、region server找到目标region
+	3、region检查数据是否与schema一致
+	4、如果客户端没有指定版本，则获取当前系统时间作为数据版本
+	5、将更新写入WAL Log
+	6、将更新写入Memstore
+	7、判断Memstore存储是否已满，如果存储已满则需要flush为store hfile文件
+
+读数据流程
+	1、客户端从zookeeper获取meta表所在的region server
+	2、客户端访问meta表所在的region server，从meta表中查询到访问行键所在的region server，之后客户端将缓冲这些信息已经meta表的位置
+	3、客户端从行键所在的region server上获取数据
+
+	如果再次读取，客户端将从缓存中获取行键所在的region server，这样客户端就不需要再次查询meta表，除非region移动导致缓存失效，这时，将会重新查询并更新缓存
+
+	meta表保存了所有region的位置信息，meta表自己的位置信息则存储在zookeeper上
+
+
+

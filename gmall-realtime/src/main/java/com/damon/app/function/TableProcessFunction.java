@@ -21,6 +21,23 @@ import java.util.List;
 
 // 分流  处理数据  广播流数据,主流数据(根据广播流数据进行处理)
 // BroadcastProcessFunction 了解的不多，还需了解
+/**
+ * 这两个方法的区别在于对 broadcast state 的访问权限不同。在处理广播流元素这端，
+ * 是具有读写权限的，而对于处理非广播流元素这端是只读的。 
+ * 这样做的原因是，Flink 中是不存在跨 task 通讯的。
+ * 所以为了保证 broadcast state 在所有的并发实例中是一致的，
+ * 我们在处理广播流元素的时候给予写权限，在所有的 task 中均可以看到这些元素，
+ * 并且要求对这些元素处理是一致的， 那么最终所有 task 得到的 broadcast state 是一致的。
+ * 
+ * 
+ * 两个ctx共有的方法
+ * 1、得到广播流的存储状态：ctx.getBroadcastState(MapStateDescriptor<K, V> stateDescriptor)
+ * 2、查询元素的时间戳：ctx.timestamp()
+ * 3、查询目前的Watermark：ctx.currentWatermark()
+ * 4、目前的处理时间(processing time)：ctx.currentProcessingTime()
+ * 5、产生旁路输出：ctx.output(OutputTag<X> outputTag, X value)
+ * 
+ */
 public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, String, JSONObject> {
 
     private final OutputTag<JSONObject> objectOutputTag;
@@ -40,6 +57,7 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
     }
 
     // value:{"db":"","tn":"","before":{},"after":{},"type":""}
+    // 处理非广播流中的数据  该方法中对于broadcast state的访问权限是只读
     // 1、获取广播的配置数据
     // 2、过滤字段，filterColumns
     // 核心处理方法，根据mysql配置表的信息为每条数据打上走的标签，走hbase还是kafka
@@ -76,7 +94,7 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
             }
 
         } else {
-            System.out.println("该组合Key：" + key + "不存在！");
+            System.out.println("该组合Key:" + key + "不存在！");
         }
 
     }
@@ -84,6 +102,7 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
     /**
      * @param data        {"id":"11","tm_name":"atguigu","logo_url":"aaa"}
      * @param sinkColumns id,tm_name
+     * 
      *                    {"id":"11","tm_name":"atguigu"}
      */
     private void filterColumn(JSONObject data, String sinkColumns) {
@@ -94,28 +113,37 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
     }
 
 
-    //value:{"db":"","tableName":"","before":{},"after":{},"type":""}
+    // value:{"db":"","tableName":"","before":{},"after":{},"type":""}
+    // 处理广播流中的元素 该方法中对于broadcast state的访问权限是读写
     // 1、获取并解析数据
     // 2、检查表是否存在，如果不存在则需要在phoneix中创建表(checkTable)
     // 3、写入状态，广播出去
+    /*
+     * processBroadcastElement() 的实现必须在所有的并发实例中具有确定性的结果
+     * 
+     */
     @Override
     public void processBroadcastElement(String value, BroadcastProcessFunction<JSONObject, String, JSONObject>.Context ctx, Collector<JSONObject> out) throws Exception {
 
-        //1.获取并解析数据
+        // 1.获取并解析数据
+        // 这里的value是通过flink cdc获取传过来的(不会是删除表)，在增加和修改的情况下，都可以在after字段中获取信息
         JSONObject jsonObject = JSON.parseObject(value);
         String data = jsonObject.getString("after");
+        // 将json转化为java bean
         TableProcess tableProcess = JSON.parseObject(data, TableProcess.class);
 
-        //建表
+        //建表 if hbase.equals(tableProcess.getSinkType())
+        // sinkTable 输出表  sinkColumns 输出字段   sinkPk 主键字段(primary key)  sinkExtend 建表扩展
         if (TableProcess.SINK_TYPE_HBASE.equals(tableProcess.getSinkType())) {
             checkTable(tableProcess.getSinkTable(),
-                    tableProcess.getSinkColumns(),
+                    tableProcess.getSinkColumns(), 
                     tableProcess.getSinkPk(),
                     tableProcess.getSinkExtend());
         }
 
         //3.写入状态,广播出去
         BroadcastState<String, TableProcess> broadcastState = ctx.getBroadcastState(mapStateDescriptor);
+        // 来源表 + 操作类型
         String key = tableProcess.getSourceTable() + "-" + tableProcess.getOperatorType();
         broadcastState.put(key, tableProcess);
     }
@@ -152,6 +180,7 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
                     .append("(");
 
             // 遍历添加字段信息
+            // 这里只添加了一条信息
             String[] fields = sinkColumns.split(",");
             for (int i = 0; i < fields.length; i++) {
                 // 取出字段
