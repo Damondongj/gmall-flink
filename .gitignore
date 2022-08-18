@@ -2,3 +2,4 @@
 /gmall-flink-cdc/target/
 /gmall-realtime/target/
 /gmall-logger/target/
+/gmall-realtime/src/main/resources/database/
