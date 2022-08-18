@@ -36,7 +36,7 @@ public class BaseLogApp {
         };
         SingleOutputStreamOperator<JSONObject> jsonObjDS = kafkaDS.process(new ProcessFunction<String, JSONObject>() {
             @Override
-            public void processElement(String value, ProcessFunction<String, JSONObject>.Context ctx, Collector<JSONObject> out) throws Exception {
+            public void processElement(String value, ProcessFunction<String, JSONObject>.Context ctx, Collector<JSONObject> out) {
                 try {
                     // 输出主流
                     JSONObject jsonObject = JSON.parseObject(value);
@@ -90,8 +90,8 @@ public class BaseLogApp {
 //                    private SimpleDateFormat simpleDateFormat;
 
                     @Override
-                    public void open(Configuration parameters) throws Exception {
-                        firstVisitState = getRuntimeContext().getState(new ValueStateDescriptor<String>("value-state", String.class));
+                    public void open(Configuration parameters) {
+                        firstVisitState = getRuntimeContext().getState(new ValueStateDescriptor<>("value-state", String.class));
 //                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     }
 
@@ -118,7 +118,6 @@ public class BaseLogApp {
 
                             //获取状态数据
                             String firstDate = firstVisitState.value();
-                            Long ts = value.getLong("ts");
 
                             // valueState里面的值不为null
                             if (firstDate != null) {
@@ -127,7 +126,6 @@ public class BaseLogApp {
                             } else {
                                 // valueState里面的值为null
                                 // 将valueState中的字段改为1
-//                                firstVisitState.update(simpleDateFormat.format(ts));
                                 firstVisitState.update("1");
                             }
                         }
@@ -142,7 +140,7 @@ public class BaseLogApp {
         };
         SingleOutputStreamOperator<String> pageDS = jsonObjWithNewFlagDS.process(new ProcessFunction<JSONObject, String>() {
             @Override
-            public void processElement(JSONObject value, ProcessFunction<JSONObject, String>.Context ctx, Collector<String> out) throws Exception {
+            public void processElement(JSONObject value, ProcessFunction<JSONObject, String>.Context ctx, Collector<String> out) {
 
                 // 获取启动日志字段
                 String start = value.getString("start");
