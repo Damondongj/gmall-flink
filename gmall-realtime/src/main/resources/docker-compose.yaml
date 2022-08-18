@@ -91,7 +91,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - "./database:/data/db"
+      - "/Users/damon/database:/data/db"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
