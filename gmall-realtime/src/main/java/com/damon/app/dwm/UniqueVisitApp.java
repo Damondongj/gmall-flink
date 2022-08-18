@@ -21,19 +21,19 @@ import static com.damon.utils.EnvUtil.getEnv;
 
 public class UniqueVisitApp {
     public static void main(String[] args) throws Exception {
-        /**
-         * 统计日活跃量uv
-         * 每天第一次访问的用户的个数
-         * 通过用户的lastPageId为null来进行判断
-         * 如果一个用户第一天晚上23点59分的状态一直保持到第二天开始，那么第二天开始这
-         * 个数据的状态不算
-         *
-         * 通过状态编程，现将同一个mid里面的数据分到同一个key里面
-         *
-         * 对于每一个分组里面的数据，现将每天第一次来的数据的时间放到状态里面
-         * lastPageId 为null 放入状态，
-         * 对于下一次来的数据，如果是同一天的数据，直接过滤掉
-         * 如果时间不是同一天的，更新key的状态
+        /*
+          统计日活跃量uv
+          每天第一次访问的用户的个数
+          通过用户的lastPageId为null来进行判断
+          如果一个用户第一天晚上23点59分的状态一直保持到第二天开始，那么第二天开始这
+          个数据的状态不算
+
+          通过状态编程，现将同一个mid里面的数据分到同一个key里面
+
+          对于每一个分组里面的数据，现将每天第一次来的数据的时间放到状态里面
+          lastPageId 为null 放入状态，
+          对于下一次来的数据，如果是同一天的数据，直接过滤掉
+          如果时间不是同一天的，更新key的状态
          */
 
         StreamExecutionEnvironment env = getEnv();
@@ -53,7 +53,7 @@ public class UniqueVisitApp {
 
 
             @Override
-            public void open(Configuration parameters) throws Exception {
+            public void open(Configuration parameters) {
                 ValueStateDescriptor<String> valueStateDescriptor = new ValueStateDescriptor<>("date-state", String.class);
                 // 设置状态的超时时间以及更新时间的方式
                 StateTtlConfig stateTtlConfig = new StateTtlConfig
