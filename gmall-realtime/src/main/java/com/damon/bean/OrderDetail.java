@@ -15,5 +15,6 @@ public class OrderDetail {
     String create_time;
     BigDecimal split_total_amount;
     BigDecimal split_activity_amount;
+    BigDecimal split_coupon_amount;
     Long create_ts;
 }

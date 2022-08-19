@@ -101,7 +101,8 @@ public class TableProcessFunction extends BroadcastProcessFunction<JSONObject, S
 
     /**
      * @param data        {"id":"11","tm_name":"atguigu","logo_url":"aaa"}
-     * @param sinkColumns id,tm_name
+     * @param sinkColumns id,tm_name  sinkColumns 字段来源于 mysql中TableProcess表中指定
+     *                    提取data中的字段
      * 
      *                    {"id":"11","tm_name":"atguigu"}
      */
