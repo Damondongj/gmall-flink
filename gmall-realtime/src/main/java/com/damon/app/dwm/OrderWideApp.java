@@ -76,7 +76,7 @@ public class OrderWideApp {
                         .withTimestampAssigner((SerializableTimestampAssigner<OrderDetail>)
                                 (element, recordTimestamp) -> element.getCreate_ts()));
 
-        //双流JOIN
+        //双流JOIN orderInfo.id == orderDetail.orderId
         SingleOutputStreamOperator<OrderWide> orderWideWithNoDimDS = orderInfoDS.keyBy(OrderInfo::getId)
                 .intervalJoin(orderDetailDS.keyBy(OrderDetail::getOrder_id))
                 .between(Time.seconds(-5), Time.seconds(5))  //生成环境中给的时间给最大延迟时间
