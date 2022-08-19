@@ -20,8 +20,6 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.OutputTag;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 
 import static com.damon.utils.EnvUtil.getEnv;
 
@@ -47,13 +45,13 @@ public class UserJumpDetailApp {
         // 定义模式序列
         Pattern<JSONObject, JSONObject> pattern = Pattern.<JSONObject>begin("start").where(new SimpleCondition<JSONObject>() {
             @Override
-            public boolean filter(JSONObject value) throws Exception {
+            public boolean filter(JSONObject value) {
                 String lastPageId = value.getJSONObject("page").getString("last_page_id");
                 return lastPageId == null || lastPageId.length() <= 0;
             }
         }).next("next").where(new SimpleCondition<JSONObject>() {
             @Override
-            public boolean filter(JSONObject value) throws Exception {
+            public boolean filter(JSONObject value) {
                 String lastPageId = value.getJSONObject("page").getString("last_page_id");
                 return lastPageId == null || lastPageId.length() <= 0;
             }
@@ -62,7 +60,7 @@ public class UserJumpDetailApp {
         // 使用循环模式  定义模式序列
         Pattern.<JSONObject>begin("start").where(new SimpleCondition<JSONObject>() {
                     @Override
-                    public boolean filter(JSONObject value) throws Exception {
+                    public boolean filter(JSONObject value) {
                         String lastPageId = value.getJSONObject("page").getString("last_page_id");
                         return lastPageId == null || lastPageId.length() <= 0;
                     }
@@ -80,17 +78,7 @@ public class UserJumpDetailApp {
         OutputTag<JSONObject> timeOutTag = new OutputTag<JSONObject>("timeOut") {
         };
         SingleOutputStreamOperator<JSONObject> selectDS = patternStream.select(timeOutTag,
-                new PatternTimeoutFunction<JSONObject, JSONObject>() {
-                    @Override
-                    public JSONObject timeout(Map<String, List<JSONObject>> map, long l) throws Exception {
-                        return map.get("start").get(0);
-                    }
-                }, new PatternSelectFunction<JSONObject, JSONObject>() {
-                    @Override
-                    public JSONObject select(Map<String, List<JSONObject>> map) throws Exception {
-                        return map.get("start").get(0);
-                    }
-                });
+                (PatternTimeoutFunction<JSONObject, JSONObject>) (map, l) -> map.get("start").get(0), (PatternSelectFunction<JSONObject, JSONObject>) map -> map.get("start").get(0));
 
         DataStream<JSONObject> timeOutDS = selectDS.getSideOutput(timeOutTag);
 

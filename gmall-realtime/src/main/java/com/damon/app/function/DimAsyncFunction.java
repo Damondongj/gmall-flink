@@ -18,7 +18,7 @@ public class DimAsyncFunction<T> extends RichAsyncFunction<T, T> implements DimA
     private Connection connection;
     private ThreadPoolExecutor threadPoolExecutor;
 
-    private String tableName;
+    private final String tableName;
 
     
 
