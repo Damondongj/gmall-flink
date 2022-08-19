@@ -6,6 +6,8 @@ networks:
     driver: bridge
   mongodb-networks:
     driver: bridge
+  hbase_phoneix-networks:
+    driver: bridge
 
 services:
   zookeeper1:
@@ -110,6 +112,15 @@ services:
       - ME_CONFIG_MONGODB_SERVER=mongodb
     networks:
       - mongodb-networks
+
+  hbase-phoneix:
+    image: xjodoin/hbase-phoenix
+    container_name: hbase-phoenix
+    restart: always
+    port:
+      - "8765:8765"
+    networks:
+      - hbase_phoneix-networks
 
 volumes:
   shared-tmpfs:
