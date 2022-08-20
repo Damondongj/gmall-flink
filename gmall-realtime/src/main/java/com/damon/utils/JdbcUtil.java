@@ -15,9 +15,9 @@ public class JdbcUtil {
      *
      * @param connection 与数据库连接
      * @param querySql 查询语句
-     * @param clz 不懂？？
+     * @param clz 对于传入的类
      * @param underScoreToCamel true/false
-     * @param <T> 不懂
+     * @param <T> 范型
      * @return ArrayList columnName value
      * @throws Exception 异常
      */

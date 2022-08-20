@@ -7,20 +7,18 @@ import com.damon.utils.ThreadPoolUtil;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.async.ResultFuture;
 import org.apache.flink.streaming.api.functions.async.RichAsyncFunction;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Collections;
 import java.util.concurrent.ThreadPoolExecutor;
 
+public abstract class DimAsyncFunction<T> extends RichAsyncFunction<T, T> implements DimAsyncJoinFunction<T> {
 
-public class DimAsyncFunction<T> extends RichAsyncFunction<T, T> implements DimAsyncJoinFunction {
-    
     private Connection connection;
     private ThreadPoolExecutor threadPoolExecutor;
 
     private final String tableName;
-
-    
 
     public DimAsyncFunction(String tableName) {
         this.tableName = tableName;
@@ -29,8 +27,8 @@ public class DimAsyncFunction<T> extends RichAsyncFunction<T, T> implements DimA
     @Override
     public void open(Configuration parameters) throws Exception {
         Class.forName(GmallConfig.PHOENIX_DRIVER);
-        connection  = DriverManager.getConnection(GmallConfig.PHOENIX_SERVER);
-    
+        connection = DriverManager.getConnection(GmallConfig.PHOENIX_SERVER);
+
         threadPoolExecutor = ThreadPoolUtil.getThreadPool();
     }
 
@@ -63,19 +61,9 @@ public class DimAsyncFunction<T> extends RichAsyncFunction<T, T> implements DimA
 
     }
 
+
     @Override
     public void timeout(T input, ResultFuture<T> resultFuture) throws Exception {
         System.out.println("TimeOut:" + input);
     }
-
-    @Override
-    public String getKey(Object input) {
-        return null;
-    }
-
-    @Override
-    public void join(Object input, JSONObject dimInfo) {
-        
-    }
-
 }
