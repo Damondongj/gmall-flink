@@ -29,7 +29,7 @@ public class BaseDBApp {
         // ods_base_db 是进过ods层处理过的， 通过flink cdc处理发送到ods_base_db
         String sourceTopic = "ods_base_db";
         String groupId = "base_db_app";
-        // 从kafka读出主流数据 kafka中数据是
+        // 从kafka读出主流数据 kafka中数据是flink cdc读取发送到ods_base_db里面的
         DataStreamSource<String> kafkaDS = env.addSource(MyKafkaUtil.getKafkaConsumer(sourceTopic, groupId));
 
         // 3.将每行数据转换为JSON对象并过滤(delete)主流，将带delete字段删掉
@@ -43,6 +43,10 @@ public class BaseDBApp {
                 });
 
         // 4.使用FlinkCDC读取配置信息表并处理成广播流
+        // 这里的flink cdc只用来监控table_process表，用来创建表，然后在processElementBroadcast里面把
+        // sourceTable + 操作类型 存入状态里面
+        // 在上面kafka流数据来了以后(也就是mysql数据库里面数据变更之后)
+        // 在processElement里面先进行判断能不能对该表进行这个操作，然后在对数据进行处理 分流(分到hbase 还是kafka里面)
         DebeziumSourceFunction<String> sourceFunction = MySQLSource.<String>builder()
                 .hostname("localhost")
                 .port(3306)
@@ -54,6 +58,7 @@ public class BaseDBApp {
                 .deserializer(new CustomerDeserialization())
                 .build();
         DataStreamSource<String> tableProcessStrDS = env.addSource(sourceFunction);
+
         // 广播的数据的格式
         // 广播流可以通过查询配置文件，广播到某个operator的所有并发实例中，然后与另一条流数据连接进行计算
         MapStateDescriptor<String, TableProcess> mapStateDescriptor = new MapStateDescriptor<>("map-state", String.class, TableProcess.class);

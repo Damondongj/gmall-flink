@@ -22,4 +22,73 @@ public class TableProcess {
     String sinkPk;
     //建表扩展
     String sinkExtend;
+
+    public String getSourceTable() {
+        return sourceTable;
+    }
+
+    public void setSourceTable(String sourceTable) {
+        this.sourceTable = sourceTable;
+    }
+
+    public String getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(String operateType) {
+        this.operateType = operateType;
+    }
+
+    public String getSinkType() {
+        return sinkType;
+    }
+
+    public void setSinkType(String sinkType) {
+        this.sinkType = sinkType;
+    }
+
+    public String getSinkTable() {
+        return sinkTable;
+    }
+
+    public void setSinkTable(String sinkTable) {
+        this.sinkTable = sinkTable;
+    }
+
+    public String getSinkColumns() {
+        return sinkColumns;
+    }
+
+    public void setSinkColumns(String sinkColumns) {
+        this.sinkColumns = sinkColumns;
+    }
+
+    public String getSinkPk() {
+        return sinkPk;
+    }
+
+    public void setSinkPk(String sinkPk) {
+        this.sinkPk = sinkPk;
+    }
+
+    public String getSinkExtend() {
+        return sinkExtend;
+    }
+
+    public void setSinkExtend(String sinkExtend) {
+        this.sinkExtend = sinkExtend;
+    }
+
+    @Override
+    public String toString() {
+        return "TableProcess{" +
+                "sourceTable='" + sourceTable + '\'' +
+                ", operateType='" + operateType + '\'' +
+                ", sinkType='" + sinkType + '\'' +
+                ", sinkTable='" + sinkTable + '\'' +
+                ", sinkColumns='" + sinkColumns + '\'' +
+                ", sinkPk='" + sinkPk + '\'' +
+                ", sinkExtend='" + sinkExtend + '\'' +
+                '}';
+    }
 }

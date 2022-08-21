@@ -4,10 +4,12 @@ networks:
     driver: bridge
   kafka-networks:
     driver: bridge
-  mongodb-networks:
-    driver: bridge
-  hbase_phoneix-networks:
-    driver: bridge
+#  mongodb-networks:
+#    driver: bridge
+#  hbase_phoneix-networks:
+#    driver: bridge
+#  kafka-map-networks:
+#    driver: bridge
 
 services:
   zookeeper1:
@@ -50,9 +52,9 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.9
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.9:9092
-      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.9:9001,192.168.0.9:9002"
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.106
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.106:9092
+      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -64,9 +66,9 @@ services:
     ports:
       - "9093:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.9
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.9:9093
-      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.9:9001,192.168.0.9:9002"
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.106
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.106:9093
+      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
       KAFKA_ADVERTISED_PORT: 9093
       KAFKA_BROKER_ID: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -78,49 +80,66 @@ services:
     ports:
       - "9094:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.9
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.9:9094
-      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.9:9001,192.168.0.9:9002"
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.106
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.106:9094
+      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
       KAFKA_ADVERTISED_PORT: 9094
       KAFKA_BROKER_ID: 3
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - kafka-networks
-  
-  mongodb:
-    image: mongo
-    container_name: mongodb
+
+  kafka-map:
+    image: dushixiang/kafka-map
+    container_name: kafka-map
+    restart: always
     ports:
-      - "27017:27017"
+      - "8080:8080"
     volumes:
-      - "/Users/damon/database:/data/db"
+      - "/Users/damon/projects/docker/kafka-map/data:/usr/local/kafka-map/data"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - DEFAULT_USERNAME=admin
+      - DEFAULT_PASSWORD=admin
     networks:
-      - mongodb-networks
+      - kafka-networks
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-    networks:
-      - mongodb-networks
-
-  hbase-phoneix:
-    image: xjodoin/hbase-phoenix
-    container_name: hbase-phoenix
-    restart: always
-    ports:
-      - "8765:8765"
-    networks:
-      - hbase_phoneix-networks
+#  mongodb:
+#    image: mongo
+#    container_name: mongodb
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - "/Users/damon/database:/data/db"
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=admin
+#      - MONGO_INITDB_ROOT_PASSWORD=admin
+#    networks:
+#      - mongodb-networks
+#
+#  mongo-express:
+#    image: mongo-express
+#    container_name: mongo-express
+#    restart: always
+#    ports:
+#      - "8082:8081"
+#    environment:
+#      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+#      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
+#      - ME_CONFIG_MONGODB_SERVER=mongodb
+#    networks:
+#      - mongodb-networks
+#
+#  hbase-phoneix:
+#    image: iteblog/hbase-phoenix-docker:1.0
+#    container_name: hbase-phoenix
+#    restart: always
+#    ports:
+#      - "8765:8765"
+##      - "8888:8888"
+##    environment:
+##      - PHOENIX_QUERYSERVER_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8888"
+#    networks:
+#      - hbase_phoneix-networks
 
 volumes:
   shared-tmpfs:

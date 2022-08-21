@@ -177,9 +177,9 @@ public class BaseLogApp {
         DataStream<String> displayDS = pageDS.getSideOutput(displayTag);
 
         //7、将三个流进行打印并输出到对应的kafka主题中
-        startDS.print("-----------start------------");
-        pageDS.print("------------page------------");
-        displayDS.print("-------------display-----------");
+        startDS.print  ("-----------start------------");
+        pageDS.print   ("------------page------------");
+        displayDS.print("-------------display--------");
 
         startDS.addSink(MyKafkaUtil.getKafkaProducer("dwd_start_log"));
         pageDS.addSink(MyKafkaUtil.getKafkaProducer("dwd_page_log"));

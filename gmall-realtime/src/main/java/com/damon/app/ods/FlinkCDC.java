@@ -21,7 +21,7 @@ public class FlinkCDC {
                 .hostname("localhost")
                 .port(3306)
                 .username("root")
-                .password("000000")
+                .password("123")
                 .databaseList("gmall_flink")
                 .deserializer(new CustomerDeserialization())
                 .startupOptions(StartupOptions.latest())
@@ -32,6 +32,7 @@ public class FlinkCDC {
 //        streamSource.print();
 
         String sinkTopic = "ods_base_db";
+        streamSource.print(">>>>>>>>>>>>>>");
         streamSource.addSink(MyKafkaUtil.getKafkaProducer(sinkTopic));
 
         //4.启动任务

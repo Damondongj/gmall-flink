@@ -27,7 +27,7 @@ public class UserJumpDetailApp {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = getEnv();
 
-        String sourceTopic = "dwd_page_id";
+        String sourceTopic = "dwd_page_log";
         String groupId = "userJumpDetailApp";
         String sinkTopic = "dwm_user_jump_detail";
         DataStreamSource<String> kafkaDS = env.addSource(MyKafkaUtil.getKafkaConsumer(sourceTopic, groupId));

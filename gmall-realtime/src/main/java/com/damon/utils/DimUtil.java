@@ -2,7 +2,6 @@ package com.damon.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.damon.common.GmallConfig;
-import org.apache.phoenix.util.JDBCUtil;
 import redis.clients.jedis.Jedis;
 
 import java.sql.Connection;
