@@ -4,6 +4,8 @@ networks:
     driver: bridge
   kafka-networks:
     driver: bridge
+  clickhouse-networks:
+    driver: bridge
 #  mongodb-networks:
 #    driver: bridge
 #  hbase_phoneix-networks:
@@ -102,6 +104,23 @@ services:
       - DEFAULT_PASSWORD=admin
     networks:
       - kafka-networks
+  
+  clickhouse:
+    image: yandex/clickhouse-server
+    container_name: clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - "/Users/damon/projects/docker/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
+      - "/Users/damon/projects/docker/clickhouse/users.xml:/etc/clickhouse-server/users.xml"
+      - "/Users/damon/projects/docker/clickhouse/data:/var/lib/clickhouse"
+      - "/Users/damon/projects/docker/clickhouse/log/clickhouse-server.log:/var/log/clickhouse-server/clickhouse-server.log"
+      - "/Users/damon/projects/docker/clickhouse/log/clickhouse-server.err.log:/var/log/clickhouse-server/clickhouse-server.err.log"
+    networks:
+      - clickhouse-networks
+
+
 
 #  mongodb:
 #    image: mongo
