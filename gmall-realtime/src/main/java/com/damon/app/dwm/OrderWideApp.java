@@ -89,6 +89,8 @@ public class OrderWideApp {
         orderWideWithNoDimDS.print("orderWideWithNoDimDS>>>>>>>>>");
 
         //4.1 关联用户维度
+        // DimAsyncFunction -> DimUtil(在这里面先通过"DIM:" + tableName + ":" + id; 在redis里面查找，
+        // 如果redis里面不存在的时候再到hbase里面查找(并将结果也写一份到redis中) -> JdbcUtil(在hbase里面查找了)
         SingleOutputStreamOperator<OrderWide> orderWideWithUserDS = AsyncDataStream.unorderedWait(
                 orderWideWithNoDimDS,
                 new DimAsyncFunction<OrderWide>("DIM_USER_INFO") {
