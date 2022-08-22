@@ -63,6 +63,7 @@ public abstract class DimAsyncFunction<T> extends RichAsyncFunction<T, T> implem
 
 
     @Override
+    // 当异步 I/O 请求超时时，默认情况下会引发异常并重新启动作业。如果要处理超时，可以覆盖该AsyncFunction#timeout方法。
     public void timeout(T input, ResultFuture<T> resultFuture) throws Exception {
         System.out.println("TimeOut:" + input);
     }

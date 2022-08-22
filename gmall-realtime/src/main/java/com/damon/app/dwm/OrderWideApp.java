@@ -165,7 +165,7 @@ public class OrderWideApp {
                     public String getKey(OrderWide orderWide) {
                         return String.valueOf(orderWide.getSpu_id());
                     }
-                }, 60, TimeUnit.SECONDS);
+                }, 60, TimeUnit.SECONDS);  // 60最长等待时间
 
         //4.5 关联TM维度
         SingleOutputStreamOperator<OrderWide> orderWideWithTmDS = AsyncDataStream.unorderedWait(
