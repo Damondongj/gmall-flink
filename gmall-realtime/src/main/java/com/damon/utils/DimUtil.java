@@ -20,7 +20,7 @@ public class DimUtil {
         if (dimInfoJsonStr != null) {
             // 重置过期时间
             jedis.expire(redisKey, 24 * 60 * 60);
-            // 归还连接
+            // 归还连接 调用JedisPool returnRedouce方法
             jedis.close();
             // 返回结果
             return JSONObject.parseObject(dimInfoJsonStr);

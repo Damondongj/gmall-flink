@@ -82,9 +82,10 @@ public class BaseDBApp {
 
         // hbase是侧输出流
         hbase.addSink(new DimSinkFunction());
-        // kafka写入主流
-        kafka.addSink(MyKafkaUtil.getKafkaProducer((KafkaSerializationSchema<JSONObject>) (element, timestamp) -> new ProducerRecord<>(element.getString("sinkTable"),
-                element.getString("after").getBytes())));
+        // kafka写入主流 动态写入kafka主题
+        kafka.addSink(MyKafkaUtil.getKafkaProducer((KafkaSerializationSchema<JSONObject>) (element, timestamp) 
+                -> new ProducerRecord<>(element.getString("sinkTable"),
+                    element.getString("after").getBytes())));
         env.execute("BaseDBApp");
     }
 }

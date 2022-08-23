@@ -53,7 +53,11 @@ public class OrderWideApp {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     orderInfo.setCreate_ts(sdf.parse(create_time).getTime());
 
-                    return orderInfo;
+                    return orderInfo;   // forMonotonousTimestamps 单调递增时间戳分配器，给定的数据源中的数据的
+                                        // 时间戳升序出现，这种情况下，当前时间戳可以充当watermark，因为后续到达的数据的时间戳不会比当前的小
+                                        // 在flink中，如果是并行数据源，则只要求并行数据源中的每个单分区数据源任务时间戳递增
+                                        // 例如，设置每一个并行数据源实例都只读取一个 Kafka 分区，则时间戳只需在每个 Kafka 分区内递增即可
+                                        // watermark 合并机制会在并行数据流进行分发（shuffle）、联合（union）、连接（connect）或合并（merge）时生成正确的 watermark。
                 }).assignTimestampsAndWatermarks(WatermarkStrategy.<OrderInfo>forMonotonousTimestamps()
                         .withTimestampAssigner(new SerializableTimestampAssigner<OrderInfo>() {
                             @Override
