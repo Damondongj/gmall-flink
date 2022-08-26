@@ -54,9 +54,9 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.106
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.106:9092
-      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.35
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.35:9092
+      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.35:9001,192.168.0.35:9002"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -68,9 +68,9 @@ services:
     ports:
       - "9093:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.106
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.106:9093
-      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.35
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.35:9093
+      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.35:9001,192.168.0.35:9002"
       KAFKA_ADVERTISED_PORT: 9093
       KAFKA_BROKER_ID: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -82,9 +82,9 @@ services:
     ports:
       - "9094:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.106
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.106:9094
-      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.106:9001,192.168.0.106:9002"
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.35
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.35:9094
+      KAFKA_ZOOKEEPER_CONNECT: "192.168.0.35:9001,192.168.0.35:9002"
       KAFKA_ADVERTISED_PORT: 9094
       KAFKA_BROKER_ID: 3
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -111,12 +111,14 @@ services:
     ports:
       - "8123:8123"
       - "9000:9000"
+      - "9004:9004"
     volumes:
-      - "/Users/damon/projects/docker/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
-      - "/Users/damon/projects/docker/clickhouse/users.xml:/etc/clickhouse-server/users.xml"
-      - "/Users/damon/projects/docker/clickhouse/data:/var/lib/clickhouse"
-      - "/Users/damon/projects/docker/clickhouse/log/clickhouse-server.log:/var/log/clickhouse-server/clickhouse-server.log"
-      - "/Users/damon/projects/docker/clickhouse/log/clickhouse-server.err.log:/var/log/clickhouse-server/clickhouse-server.err.log"
+      - "/Users/damon/projects/docker/clickhouse/db:/var/lib/clickhouse"
+#      - "/Users/damon/projects/docker/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
+#      - "/Users/damon/projects/docker/clickhouse/users.xml:/etc/clickhouse-server/users.xml"
+#      - "/Users/damon/projects/docker/clickhouse/data:/var/lib/clickhouse"
+#      - "/Users/damon/projects/docker/clickhouse/log/clickhouse-server.log:/var/log/clickhouse-server/clickhouse-server.log"
+#      - "/Users/damon/projects/docker/clickhouse/log/clickhouse-server.err.log:/var/log/clickhouse-server/clickhouse-server.err.log"
     networks:
       - clickhouse-networks
 
