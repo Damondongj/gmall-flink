@@ -3,6 +3,7 @@ package com.damon.app.dws;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.damon.bean.VisitorStats;
+import com.damon.utils.ClickHouseUtil;
 import com.damon.utils.DateTimeUtil;
 import com.damon.utils.MyKafkaUtil;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
@@ -24,7 +25,7 @@ import java.util.Date;
 import static com.damon.utils.EnvUtil.getEnv;
 
 public class VisitorStatsApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = getEnv();
 
         String groupId = "visitor_stats_app";
@@ -95,15 +96,11 @@ public class VisitorStatsApp {
 
         SingleOutputStreamOperator<VisitorStats> visitorStatsWithWMDS = unionDS.assignTimestampsAndWatermarks(WatermarkStrategy
                 .<VisitorStats>forBoundedOutOfOrderness(Duration.ofSeconds(11))
-                .withTimestampAssigner(new SerializableTimestampAssigner<VisitorStats>() {
-                    @Override
-                    public long extractTimestamp(VisitorStats element, long recordTimestamp) {
-                        return element.getTs();
-                    }
-                })
+                .withTimestampAssigner((SerializableTimestampAssigner<VisitorStats>) (element, recordTimestamp) -> element.getTs())
         );
 
-        KeyedStream<VisitorStats, Tuple4<String, String, String, String>> keyedStream = visitorStatsWithWMDS.keyBy(new KeySelector<VisitorStats, Tuple4<String, String, String, String>>() {
+        KeyedStream<VisitorStats, Tuple4<String, String, String, String>> keyedStream = visitorStatsWithWMDS.keyBy(
+                new KeySelector<VisitorStats, Tuple4<String, String, String, String>>() {
             @Override
             public Tuple4<String, String, String, String> getKey(VisitorStats value) throws Exception {
                 return new Tuple4<String, String, String, String>(
@@ -145,6 +142,8 @@ public class VisitorStatsApp {
                 });
 
         result.print(">>>>>>>>>>>>>>>");
-        result.addSink(ClickHouseUtil.getSink("insert into visitor_stats values(?,?,?,?,?,?,?,?,?,?,?,?)"))
+        result.addSink(ClickHouseUtil.getSink("insert into visitor_stats values(?,?,?,?,?,?,?,?,?,?,?,?)"));
+
+        env.execute("VisitorStatsApp");
     }
 }

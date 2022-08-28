@@ -1,6 +1,6 @@
 package com.damon.bean;
 
-/**
+/*
  * Desc: 商品统计实体类
  *
  * @Builder注解 可以使用构造者方式创建对象，给属性赋值
@@ -54,7 +54,7 @@ public class ProductStats {
     Long order_ct = 0L; //订单数
 
     @Builder.Default   //支付金额
-            BigDecimal payment_amount = BigDecimal.ZERO;
+    BigDecimal payment_amount = BigDecimal.ZERO;
 
     @Builder.Default
     Long paid_order_ct = 0L;  //支付订单数
