@@ -24,6 +24,8 @@ public class ClickHouseUtil {
                     public void accept(PreparedStatement preparedStatement, T t) throws SQLException {
                         try {
                             //获取所有的属性信息
+                            //我们通过 Class 对象的 getFields() 方法可以获取 Class 类的属性，但无法获取私有属性。
+                            // 而如果使用 Class 对象的 getDeclaredFields() 方法则可以获取包括私有属性在内的所有属性：
                             Field[] fields = t.getClass().getDeclaredFields();
 
                             //遍历字段
