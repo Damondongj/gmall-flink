@@ -1,7 +1,6 @@
 package com.damon.utils;
 
-import org.apache.flink.runtime.state.filesystem.FsStateBackend;
-import org.apache.flink.streaming.api.CheckpointingMode;
+
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class EnvUtil {

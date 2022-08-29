@@ -15,7 +15,6 @@ public class ArrayListDemo {
         array.add("python");
 
         // Iterator it = array.iterator();
-
         // while(it.hasNext()) {
         //     String s = (String) it.next();
         //     System.out.println(s);

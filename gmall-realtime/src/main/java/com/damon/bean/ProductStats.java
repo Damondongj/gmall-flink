@@ -48,7 +48,7 @@ public class ProductStats {
     Long order_sku_num = 0L; //下单商品个数
 
     @Builder.Default   //下单商品金额
-            BigDecimal order_amount = BigDecimal.ZERO;
+    BigDecimal order_amount = BigDecimal.ZERO;
 
     @Builder.Default
     Long order_ct = 0L; //订单数
