@@ -140,7 +140,7 @@ public class OrderWideApp {
                     }
                 }, 60, TimeUnit.SECONDS);
 
-        //4.3 关联SKU维度
+        //4.3 关联SKU维度  SKU 库存单位
         SingleOutputStreamOperator<OrderWide> orderWideWithSkuDS = AsyncDataStream.unorderedWait(
                 orderWideWithProvinceDS, new DimAsyncFunction<OrderWide>("DIM_SKU_INFO") {
                     @Override
