@@ -1,0 +1,329 @@
+2023.05.20 11:27:41 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/damon/projects/IdeaProjects/gmall-flink/.metals/lsp.trace.json or /Users/damon/Library/Caches/org.scalameta.metals/lsp.trace.json
+2023.05.20 11:27:42 INFO  logging to file /Users/damon/projects/IdeaProjects/gmall-flink/.metals/metals.log
+2023.05.20 11:27:42 INFO  Started: Metals version 0.11.10 in workspace '/Users/damon/projects/IdeaProjects/gmall-flink' for client Visual Studio Code 1.76.2.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/Users/damon/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.10.5/scribe-slf4j_2.13-3.10.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.05.20 11:27:43 INFO  time: initialize in 1.52s
+2023.05.20 11:27:44 WARN  Build server is not auto-connectable.
+2023.05.20 11:27:44 WARN  no build target for: /Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java
+2023.05.20 11:27:45 WARN  Running javac-semanticdb failed for file:///Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java. Output:
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:3: error: package com.alibaba.fastjson does not exist
+import com.alibaba.fastjson.JSON;
+                           ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:4: error: package com.alibaba.fastjson does not exist
+import com.alibaba.fastjson.JSONObject;
+                           ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:5: error: package com.alibaba.ververica.cdc.connectors.mysql does not exist
+import com.alibaba.ververica.cdc.connectors.mysql.MySQLSource;
+                                                 ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:6: error: package com.alibaba.ververica.cdc.connectors.mysql.table does not exist
+import com.alibaba.ververica.cdc.connectors.mysql.table.StartupOptions;
+                                                       ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:7: error: package com.alibaba.ververica.cdc.debezium does not exist
+import com.alibaba.ververica.cdc.debezium.DebeziumSourceFunction;
+                                         ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:8: error: package com.damon.app.function does not exist
+import com.damon.app.function.CustomerDeserialization;
+                             ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:9: error: package com.damon.app.function does not exist
+import com.damon.app.function.DimSinkFunction;
+                             ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:10: error: package com.damon.app.function does not exist
+import com.damon.app.function.TableProcessFunction;
+                             ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:11: error: package com.damon.bean does not exist
+import com.damon.bean.TableProcess;
+                     ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:12: error: package com.damon.utils does not exist
+import com.damon.utils.MyKafkaUtil;
+                      ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:13: error: package org.apache.flink.api.common.functions does not exist
+import org.apache.flink.api.common.functions.FilterFunction;
+                                            ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:14: error: package org.apache.flink.api.common.state does not exist
+import org.apache.flink.api.common.state.MapStateDescriptor;
+                                        ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:15: error: package org.apache.flink.streaming.api.datastream does not exist
+import org.apache.flink.streaming.api.datastream.*;
+^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:16: error: package org.apache.flink.streaming.api.environment does not exist
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+                                                 ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:17: error: package org.apache.flink.streaming.connectors.kafka does not exist
+import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
+                                                  ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:18: error: package org.apache.flink.util does not exist
+import org.apache.flink.util.OutputTag;
+                            ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:19: error: package org.apache.kafka.clients.producer does not exist
+import org.apache.kafka.clients.producer.ProducerRecord;
+                                        ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:21: error: package com.damon.utils does not exist
+import static com.damon.utils.EnvUtil.getEnv;
+                             ^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:21: error: static import only from classes and interfaces
+import static com.damon.utils.EnvUtil.getEnv;
+^
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:26: error: cannot find symbol
+        StreamExecutionEnvironment env = getEnv();
+        ^
+  symbol:   class StreamExecutionEnvironment
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:26: error: cannot find symbol
+        StreamExecutionEnvironment env = getEnv();
+                                         ^
+  symbol:   method getEnv()
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:33: error: cannot find symbol
+        DataStreamSource<String> kafkaDS = env.addSource(MyKafkaUtil.getKafkaConsumer(sourceTopic, groupId));
+        ^
+  symbol:   class DataStreamSource
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:33: error: cannot find symbol
+        DataStreamSource<String> kafkaDS = env.addSource(MyKafkaUtil.getKafkaConsumer(sourceTopic, groupId));
+                                                         ^
+  symbol:   variable MyKafkaUtil
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:36: error: cannot find symbol
+        SingleOutputStreamOperator<JSONObject> jsonObjDS = kafkaDS.map(JSON::parseObject)
+        ^
+  symbol:   class SingleOutputStreamOperator
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:36: error: cannot find symbol
+        SingleOutputStreamOperator<JSONObject> jsonObjDS = kafkaDS.map(JSON::parseObject)
+                                   ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:37: error: cannot find symbol
+                .filter((FilterFunction<JSONObject>) value -> {
+                         ^
+  symbol:   class FilterFunction
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:37: error: cannot find symbol
+                .filter((FilterFunction<JSONObject>) value -> {
+                                        ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:36: error: cannot find symbol
+        SingleOutputStreamOperator<JSONObject> jsonObjDS = kafkaDS.map(JSON::parseObject)
+                                                                       ^
+  symbol:   variable JSON
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:50: error: cannot find symbol
+        DebeziumSourceFunction<String> sourceFunction = MySQLSource.<String>builder()
+        ^
+  symbol:   class DebeziumSourceFunction
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:58: error: cannot find symbol
+                .deserializer(new CustomerDeserialization())
+                                  ^
+  symbol:   class CustomerDeserialization
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:57: error: cannot find symbol
+                .startupOptions(StartupOptions.initial())
+                                ^
+  symbol:   variable StartupOptions
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:50: error: cannot find symbol
+        DebeziumSourceFunction<String> sourceFunction = MySQLSource.<String>builder()
+                                                        ^
+  symbol:   variable MySQLSource
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:60: error: cannot find symbol
+        DataStreamSource<String> tableProcessStrDS = env.addSource(sourceFunction);
+        ^
+  symbol:   class DataStreamSource
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:64: error: cannot find symbol
+        MapStateDescriptor<String, TableProcess> mapStateDescriptor = new MapStateDescriptor<>("map-state", String.class, TableProcess.class);
+        ^
+  symbol:   class MapStateDescriptor
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:64: error: cannot find symbol
+        MapStateDescriptor<String, TableProcess> mapStateDescriptor = new MapStateDescriptor<>("map-state", String.class, TableProcess.class);
+                                   ^
+  symbol:   class TableProcess
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:64: error: cannot find symbol
+        MapStateDescriptor<String, TableProcess> mapStateDescriptor = new MapStateDescriptor<>("map-state", String.class, TableProcess.class);
+                                                                          ^
+  symbol:   class MapStateDescriptor
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:64: error: cannot find symbol
+        MapStateDescriptor<String, TableProcess> mapStateDescriptor = new MapStateDescriptor<>("map-state", String.class, TableProcess.class);
+                                                                                                                          ^
+  symbol:   class TableProcess
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:65: error: cannot find symbol
+        BroadcastStream<String> broadcastStream = tableProcessStrDS.broadcast(mapStateDescriptor);
+        ^
+  symbol:   class BroadcastStream
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:68: error: cannot find symbol
+        BroadcastConnectedStream<JSONObject, String> connectedStream = jsonObjDS.connect(broadcastStream);
+        ^
+  symbol:   class BroadcastConnectedStream
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:68: error: cannot find symbol
+        BroadcastConnectedStream<JSONObject, String> connectedStream = jsonObjDS.connect(broadcastStream);
+                                 ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:71: error: cannot find symbol
+        OutputTag<JSONObject> hbaseTag = new OutputTag<JSONObject>("hbase-tag") {
+        ^
+  symbol:   class OutputTag
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:71: error: cannot find symbol
+        OutputTag<JSONObject> hbaseTag = new OutputTag<JSONObject>("hbase-tag") {
+                  ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:71: error: cannot find symbol
+        OutputTag<JSONObject> hbaseTag = new OutputTag<JSONObject>("hbase-tag") {
+                                             ^
+  symbol:   class OutputTag
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:71: error: cannot find symbol
+        OutputTag<JSONObject> hbaseTag = new OutputTag<JSONObject>("hbase-tag") {
+                                                       ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:74: error: cannot find symbol
+        SingleOutputStreamOperator<JSONObject> kafka = connectedStream.process(new TableProcessFunction(hbaseTag, mapStateDescriptor));
+        ^
+  symbol:   class SingleOutputStreamOperator
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:74: error: cannot find symbol
+        SingleOutputStreamOperator<JSONObject> kafka = connectedStream.process(new TableProcessFunction(hbaseTag, mapStateDescriptor));
+                                   ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:74: error: cannot find symbol
+        SingleOutputStreamOperator<JSONObject> kafka = connectedStream.process(new TableProcessFunction(hbaseTag, mapStateDescriptor));
+                                                                                   ^
+  symbol:   class TableProcessFunction
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:77: error: cannot find symbol
+        DataStream<JSONObject> hbase = kafka.getSideOutput(hbaseTag);
+        ^
+  symbol:   class DataStream
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:77: error: cannot find symbol
+        DataStream<JSONObject> hbase = kafka.getSideOutput(hbaseTag);
+                   ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:84: error: cannot find symbol
+        hbase.addSink(new DimSinkFunction());
+                          ^
+  symbol:   class DimSinkFunction
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:86: error: cannot find symbol
+        kafka.addSink(MyKafkaUtil.getKafkaProducer((KafkaSerializationSchema<JSONObject>) (element, timestamp) 
+                                                    ^
+  symbol:   class KafkaSerializationSchema
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:86: error: cannot find symbol
+        kafka.addSink(MyKafkaUtil.getKafkaProducer((KafkaSerializationSchema<JSONObject>) (element, timestamp) 
+                                                                             ^
+  symbol:   class JSONObject
+  location: class BaseDBApp
+/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java:86: error: cannot find symbol
+        kafka.addSink(MyKafkaUtil.getKafkaProducer((KafkaSerializationSchema<JSONObject>) (element, timestamp) 
+                      ^
+  symbol:   variable MyKafkaUtil
+  location: class BaseDBApp
+com.sourcegraph.semanticdb_javac.CompilationUnitException: file:/Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/app/dwd/BaseDBApp.java
+Caused by: java.lang.NullPointerException
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.semanticdbRange(SemanticdbVisitor.java:286)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.semanticdbOccurrence(SemanticdbVisitor.java:339)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.emitSymbolOccurrence(SemanticdbVisitor.java:84)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitMemberReference(SemanticdbVisitor.java:226)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitMemberReference(SemanticdbVisitor.java:30)
+	at com.sun.tools.javac.tree.JCTree$JCMemberReference.accept(JCTree.java:1987)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scan(TreeScanner.java:91)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:99)
+	at com.sun.source.util.TreeScanner.visitMethodInvocation(TreeScanner.java:271)
+	at com.sun.tools.javac.tree.JCTree$JCMethodInvocation.accept(JCTree.java:1477)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.visitMemberSelect(TreeScanner.java:346)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitMemberSelect(SemanticdbVisitor.java:238)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitMemberSelect(SemanticdbVisitor.java:30)
+	at com.sun.tools.javac.tree.JCTree$JCFieldAccess.accept(JCTree.java:1903)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:81)
+	at com.sun.source.util.TreeScanner.visitMethodInvocation(TreeScanner.java:270)
+	at com.sun.tools.javac.tree.JCTree$JCMethodInvocation.accept(JCTree.java:1477)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:81)
+	at com.sun.source.util.TreeScanner.visitVariable(TreeScanner.java:153)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitVariable(SemanticdbVisitor.java:207)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitVariable(SemanticdbVisitor.java:30)
+	at com.sun.tools.javac.tree.JCTree$JCVariableDecl.accept(JCTree.java:864)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:81)
+	at com.sun.source.util.TreeScanner.scan(TreeScanner.java:91)
+	at com.sun.source.util.TreeScanner.visitBlock(TreeScanner.java:162)
+	at com.sun.tools.javac.tree.JCTree$JCBlock.accept(JCTree.java:918)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:81)
+	at com.sun.source.util.TreeScanner.visitMethod(TreeScanner.java:144)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitMethod(SemanticdbVisitor.java:197)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitMethod(SemanticdbVisitor.java:30)
+	at com.sun.tools.javac.tree.JCTree$JCMethodDecl.accept(JCTree.java:800)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:81)
+	at com.sun.source.util.TreeScanner.scan(TreeScanner.java:91)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:99)
+	at com.sun.source.util.TreeScanner.visitClass(TreeScanner.java:133)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitClass(SemanticdbVisitor.java:171)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.visitClass(SemanticdbVisitor.java:30)
+	at com.sun.tools.javac.tree.JCTree$JCClassDecl.accept(JCTree.java:720)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sun.source.util.TreeScanner.scan(TreeScanner.java:91)
+	at com.sun.source.util.TreeScanner.scanAndReduce(TreeScanner.java:99)
+	at com.sun.source.util.TreeScanner.visitCompilationUnit(TreeScanner.java:120)
+	at com.sun.tools.javac.tree.JCTree$JCCompilationUnit.accept(JCTree.java:550)
+	at com.sun.source.util.TreePathScanner.scan(TreePathScanner.java:68)
+	at com.sourcegraph.semanticdb_javac.SemanticdbVisitor.buildTextDocument(SemanticdbVisitor.java:68)
+	at com.sourcegraph.semanticdb_javac.SemanticdbTaskListener.onFinishedAnalyze(SemanticdbTaskListener.java:66)
+	at com.sourcegraph.semanticdb_javac.SemanticdbTaskListener.finished(SemanticdbTaskListener.java:46)
+	at com.sun.tools.javac.api.ClientCodeWrapper$WrappedTaskListener.finished(ClientCodeWrapper.java:681)
+	at com.sun.tools.javac.api.MultiTaskListener.finished(MultiTaskListener.java:111)
+	at com.sun.tools.javac.main.JavaCompiler.flow(JavaCompiler.java:1342)
+	at com.sun.tools.javac.main.JavaCompiler.flow(JavaCompiler.java:1296)
+	at com.sun.tools.javac.main.JavaCompiler.compile2(JavaCompiler.java:901)
+	at com.sun.tools.javac.main.JavaCompiler.compile(JavaCompiler.java:860)
+	at com.sun.tools.javac.main.Main.compile(Main.java:523)
+	at com.sun.tools.javac.main.Main.compile(Main.java:381)
+	at com.sun.tools.javac.main.Main.compile(Main.java:370)
+	at com.sun.tools.javac.main.Main.compile(Main.java:361)
+	at com.sun.tools.javac.Main.compile(Main.java:56)
+	at com.sun.tools.javac.Main.main(Main.java:42)
+Please report a bug to https://github.com/sourcegraph/semanticdb-java with the stack trace above.
+53 errors
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 9
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 12
+May 20, 2023 11:27:53 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 11
+May 20, 2023 11:27:55 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.05.20 11:27:59 WARN  no build target for: /Users/damon/projects/IdeaProjects/gmall-flink/gmall-realtime/src/main/java/com/damon/utils/MyKafkaUtil.java
